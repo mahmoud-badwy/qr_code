@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code/widgets/select_colors.dart';
+import 'package:qr_code/widgets/home/image.dart';
 import 'package:qr_code/widgets/iconoption.dart';
-import 'package:qr_code/widgets/colors.dart';
-import 'package:qr_code/widgets/image_suffix.dart';
+import 'package:qr_code/data/variablesbank.dart';
+import 'package:qr_code/widgets/types/form_data.dart';
+import 'package:qr_code/widgets/types/text.dart';
+import 'package:qr_code/widgets/types/wifi.dart';
 
 class HomeScreen extends StatefulWidget {
   static String screenRoute = 'home';
@@ -12,14 +16,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool pattern1 = true;
-  bool pattern2 = false;
-  bool pattern3 = false;
-  bool pattern4 = false;
-  bool white = false;
-  bool red = true;
-  bool tial = false;
-  bool green = false;
+  Widget type = const TExt();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          onPressed: () {
-            print('done');
-          },
+          onPressed: () {},
           icon: const Icon(Icons.qr_code_scanner),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: Column(
+        child: ListView(
           children: [
             Card(
               shape: RoundedRectangleBorder(
@@ -44,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               color: const Color(0xff0c0351),
               child: ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 25),
                 iconColor: Colors.white,
                 collapsedIconColor: Colors.white,
                 title: const Text(
@@ -61,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        IconOption(
+                        IconOption2(
                           oneselected: pattern1,
                           child: IconButton(
                             onPressed: () {
@@ -78,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        IconOption(
+                        IconOption2(
                           oneselected: pattern2,
                           child: IconButton(
                             onPressed: () {
@@ -95,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        IconOption(
+                        IconOption2(
                           oneselected: pattern3,
                           child: IconButton(
                             onPressed: () {
@@ -112,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        IconOption(
+                        IconOption2(
                           oneselected: pattern4,
                           child: IconButton(
                             onPressed: () {
@@ -144,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               color: const Color(0xff0c0351),
               child: ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 25),
                 iconColor: Colors.white,
                 collapsedIconColor: Colors.white,
                 title: const Text(
@@ -258,28 +256,135 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 12,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                ImageSuffix(
-                  text: 'PNG',
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              color: const Color(0xff0c0351),
+              child: ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 25),
+                iconColor: Colors.white,
+                collapsedIconColor: Colors.white,
+                title: const Text(
+                  'TYPE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                ImageSuffix(
-                  text: 'JPG',
-                ),
-                ImageSuffix(
-                  text: 'SVG',
-                )
-              ],
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  // TextFormField(
-                  //   decoration: InputDecoration(bod),
-                  // )
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconOption(
+                          oneselected: type1,
+                          text: 'Text',
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                type = const TExt();
+                                type1 = true;
+                                type2 = false;
+                                type3 = false;
+                                type4 = false;
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.text_format_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        IconOption(
+                          oneselected: type2,
+                          text: 'WiFi',
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                type1 = false;
+                                type2 = true;
+                                type3 = false;
+                                type4 = false;
+
+                                type = const WiFi();
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.wifi_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        IconOption(
+                          oneselected: type4,
+                          text: 'Form Data',
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                type = const FormData();
+                                type1 = false;
+                                type2 = false;
+                                type3 = false;
+                                type4 = true;
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.data_object,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const ImageSuffix2(),
+            const SizedBox(
+              height: 50,
+            ),
+            Column(
+              children: [
+                type,
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFA19999),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: MaterialButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.download,
+                          color: unSelectedColor,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Download Code',
+                          style: TextStyle(color: unSelectedColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),
