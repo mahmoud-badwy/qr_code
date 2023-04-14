@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code/controller/text_form.dart';
 import 'package:qr_code/screens/scan_qr.dart';
-import 'package:qr_code/widgets/home/input_field.dart';
+import 'package:qr_code/widgets/forms/data_form.dart';
+import 'package:qr_code/widgets/forms/text_form.dart';
+import 'package:qr_code/widgets/forms/wifi_form.dart';
 // import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/select_colors.dart';
 import 'package:qr_code/widgets/home/image.dart';
@@ -284,56 +286,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               children: [
                 if (type == 1)
-                  const InputField(
-                    hint: 'enter your hint',
-                    type: 'text',
-                  )
+                  const TextForm()
                 else
-                  type == 2
-                      ? Column(
-                          children: const [
-                            InputField(
-                              hint: 'SSID',
-                              type: 'wifi_ssid',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hint: 'Password',
-                              type: 'wifi_pass',
-                            )
-                          ],
-                        )
-                      : Column(
-                          children: const [
-                            InputField(
-                              hint: 'name',
-                              type: 'data_name',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hint: 'email',
-                              type: 'data_email',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hint: 'age',
-                              type: 'data_age',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hint: 'description',
-                              type: 'data_des',
-                            )
-                          ],
-                        ),
+                  type == 2 ? const WifiForm() : const DataForm(),
                 const SizedBox(
                   height: 20,
                 ),
