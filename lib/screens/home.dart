@@ -9,7 +9,6 @@ import 'package:qr_code/widgets/forms/text_form.dart';
 import 'package:qr_code/widgets/forms/wifi_form.dart';
 // import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/select_colors.dart';
-import 'package:qr_code/widgets/home/image.dart';
 import 'package:qr_code/widgets/iconoption.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -246,10 +245,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            const ImageSuffix2(),
             const SizedBox(
               height: 50,
             ),
