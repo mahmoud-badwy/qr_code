@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_code/controller/scan_qr.dart';
+import 'package:qr_code/widgets/home/downlaod_button.dart';
 
 class ScanQrScreen extends StatelessWidget {
   static String screenRoute = 'scan_qr';
@@ -13,17 +16,17 @@ class ScanQrScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            const Text(''),
-            ElevatedButton(
-              onPressed: () async {
-                await FlutterBarcodeScanner.getBarcodeStreamReceiver(
-                        "#ff6666", "Cancel", false, ScanMode.DEFAULT)
-                    ?.listen((barcode) {
-                  /// barcode to be used
-                });
-              },
-              child: const Text('scan'),
-            )
+            Text(Provider.of<ScanQrController>(context).qrContect),
+            MyButton(
+              child: MaterialButton(
+                onPressed: () async {
+                  String barcodeScanRes =
+                      await FlutterBarcodeScanner.scanBarcode(
+                          '#ffffff', 'cancel', true, ScanMode.QR);
+                },
+                child: const Text('Start Scan'),
+              ),
+            ),
           ],
         ));
   }

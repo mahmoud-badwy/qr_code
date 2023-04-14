@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_code/controller/scan_qr.dart';
 import 'package:qr_code/controller/text_form.dart';
 import 'package:qr_code/controller/toggle_colors.dart';
 import 'package:qr_code/controller/toggle_type.dart';
@@ -26,6 +27,9 @@ class MainScreen extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ToggleColors(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ScanQrController(),
         ),
       ],
       child: MaterialApp(

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code/controller/toggle_colors.dart';
 
-class DownlaodButton extends StatelessWidget {
-  const DownlaodButton({super.key});
+class MyButton extends StatelessWidget {
+  final Widget child;
 
+  const MyButton({
+    super.key,
+    required this.child,
+  });
   @override
   Widget build(BuildContext context) {
     ToggleColors myProvider = Provider.of<ToggleColors>(context);
@@ -16,25 +20,7 @@ class DownlaodButton extends StatelessWidget {
         color: const Color(0xFFA19999),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: MaterialButton(
-        onPressed: () {},
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.download,
-              color: myProvider.unSelectedColor,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              'Download Code',
-              style: TextStyle(color: myProvider.unSelectedColor),
-            ),
-          ],
-        ),
-      ),
+      child: child,
     );
   }
 }
