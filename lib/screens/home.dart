@@ -12,17 +12,9 @@ import 'package:qr_code/widgets/select_colors.dart';
 import 'package:qr_code/widgets/iconoption.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static String screenRoute = 'home';
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  Color backcolor = Colors.white;
-  Color forecolor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
