@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code/controller/text_form.dart';
+import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/home/input_field.dart';
 // import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/select_colors.dart';
@@ -31,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(ScanQrScreen.screenRoute);
+          },
           icon: const Icon(Icons.qr_code_scanner),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
