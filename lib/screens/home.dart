@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code/controller/text_form.dart';
+import 'package:qr_code/controller/toggle_type.dart';
 import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/forms/data_form.dart';
 import 'package:qr_code/widgets/forms/text_form.dart';
@@ -28,6 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     HandleForm formProvider = Provider.of<HandleForm>(context);
+    ToggleType toggleTypeProvider = Provider.of<ToggleType>(context);
+    ToggleType toggleTypeProviderFunction =
+        Provider.of<ToggleType>(context, listen: false);
     return Scaffold(
       backgroundColor: const Color(0XFF0a033a),
       appBar: AppBar(
@@ -49,9 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Center(
               child: QrImage(
-                data: type == 1
+                data: toggleTypeProvider.type == 1
                     ? formProvider.textForm['text']!
-                    : type == 2
+                    : toggleTypeProvider.type == 2
                         ? "SSID: ${formProvider.wifiForm['ssid']}\nPassword: ${formProvider.wifiForm['password']}"
                         : "Name: ${formProvider.dataForm['name']}\nAge: ${formProvider.dataForm['age']}\nEmail: ${formProvider.dataForm['email']}\nDescription: ${formProvider.dataForm['description']}",
                 errorCorrectionLevel: 3,
@@ -213,17 +217,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconOption(
-                          oneselected: type1,
+                          oneselected:
+                              toggleTypeProvider.checkTypeIsSelected(1),
                           text: 'Text',
                           child: IconButton(
                             onPressed: () {
-                              setState(() {
-                                type = 1;
-                                type1 = true;
-                                type2 = false;
-                                type3 = false;
-                                type4 = false;
-                              });
+                              toggleTypeProviderFunction.changeType(1);
                             },
                             icon: const Icon(
                               Icons.text_format_outlined,
@@ -232,18 +231,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconOption(
-                          oneselected: type2,
+                          oneselected:
+                              toggleTypeProvider.checkTypeIsSelected(2),
                           text: 'WiFi',
                           child: IconButton(
                             onPressed: () {
-                              setState(() {
-                                type1 = false;
-                                type2 = true;
-                                type3 = false;
-                                type4 = false;
-
-                                type = 2;
-                              });
+                              toggleTypeProviderFunction.changeType(2);
                             },
                             icon: const Icon(
                               Icons.wifi_outlined,
@@ -252,17 +245,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconOption(
-                          oneselected: type4,
+                          oneselected:
+                              toggleTypeProvider.checkTypeIsSelected(3),
                           text: 'Form Data',
                           child: IconButton(
                             onPressed: () {
-                              setState(() {
-                                type = 4;
-                                type1 = false;
-                                type2 = false;
-                                type3 = false;
-                                type4 = true;
-                              });
+                              toggleTypeProviderFunction.changeType(3);
                             },
                             icon: const Icon(
                               Icons.data_object,
@@ -285,10 +273,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Column(
               children: [
-                if (type == 1)
+                if (toggleTypeProvider.type == 1)
                   const TextForm()
                 else
-                  type == 2 ? const WifiForm() : const DataForm(),
+                  toggleTypeProvider.type == 2
+                      ? const WifiForm()
+                      : const DataForm(),
                 const SizedBox(
                   height: 20,
                 ),

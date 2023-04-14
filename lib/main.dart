@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code/controller/text_form.dart';
+import 'package:qr_code/controller/toggle_type.dart';
 import 'package:qr_code/screens/home.dart';
 import 'package:qr_code/screens/scan_qr.dart';
 
@@ -18,6 +19,9 @@ class MainScreen extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => HandleForm(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ToggleType(),
         ),
       ],
       child: MaterialApp(
