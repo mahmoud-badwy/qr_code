@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code/screens/scan_qr.dart';
+// import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/select_colors.dart';
 import 'package:qr_code/widgets/home/image.dart';
 import 'package:qr_code/widgets/iconoption.dart';
@@ -35,11 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: IconButton(
           onPressed: () {},
           icon: const Icon(Icons.qr_code_scanner),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             Center(
               child: QrImage(
@@ -355,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 onChanged: (value) {
-                                 setState(() {
+                                  setState(() {
                                     password = value;
                                   });
                                 },
@@ -535,33 +538,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 15),
-                  width: MediaQuery.of(context).size.width / 2.2,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFA19999),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: MaterialButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.download,
-                          color: unSelectedColor,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Download Code',
-                          style: TextStyle(color: unSelectedColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
               ],
             ),
           ],
