@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code/data/variablesbank.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_code/controller/toggle_colors.dart';
 
 class IconOption extends StatelessWidget {
   final bool oneselected;
@@ -14,12 +15,15 @@ class IconOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ToggleColors myProvider = Provider.of<ToggleColors>(context);
     return Column(
       children: [
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: !oneselected ? unSelectedColor : selectedColor,
+            color: !oneselected
+                ? myProvider.unSelectedColor
+                : myProvider.selectedColor,
           ),
           padding: const EdgeInsets.all(10),
           child: child,
@@ -48,10 +52,13 @@ class IconOption2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ToggleColors myProvider = Provider.of<ToggleColors>(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: !oneselected ? unSelectedColor : selectedColor,
+        color: !oneselected
+            ? myProvider.unSelectedColor
+            : myProvider.selectedColor,
       ),
       padding: const EdgeInsets.all(10),
       child: child,

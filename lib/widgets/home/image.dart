@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_code/controller/toggle_colors.dart';
 import 'package:qr_code/data/variablesbank.dart';
 import 'package:qr_code/widgets/image_suffix.dart';
 
@@ -12,6 +14,7 @@ class ImageSuffix2 extends StatefulWidget {
 class _ImageSuffix2State extends State<ImageSuffix2> {
   @override
   Widget build(BuildContext context) {
+    ToggleColors myProvider = Provider.of<ToggleColors>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -31,7 +34,9 @@ class _ImageSuffix2State extends State<ImageSuffix2> {
           },
           child: ImageSuffix(
             text: 'PNG',
-            color: !pngimage ? unSelectedColor : selectedColor,
+            color: !pngimage
+                ? myProvider.unSelectedColor
+                : myProvider.selectedColor,
           ),
         ),
         GestureDetector(
@@ -52,7 +57,9 @@ class _ImageSuffix2State extends State<ImageSuffix2> {
           },
           child: ImageSuffix(
             text: 'JPG',
-            color: !jpgimage ? unSelectedColor : selectedColor,
+            color: !jpgimage
+                ? myProvider.unSelectedColor
+                : myProvider.selectedColor,
           ),
         ),
         GestureDetector(
@@ -73,7 +80,9 @@ class _ImageSuffix2State extends State<ImageSuffix2> {
           },
           child: ImageSuffix(
             text: 'SVG',
-            color: !svgimage ? unSelectedColor : selectedColor,
+            color: !svgimage
+                ? myProvider.unSelectedColor
+                : myProvider.selectedColor,
           ),
         ),
       ],

@@ -11,7 +11,6 @@ import 'package:qr_code/widgets/forms/wifi_form.dart';
 import 'package:qr_code/widgets/select_colors.dart';
 import 'package:qr_code/widgets/home/image.dart';
 import 'package:qr_code/widgets/iconoption.dart';
-import 'package:qr_code/data/variablesbank.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
