@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: const [
                             InputField(
                               hint: 'name',
-                              type: 'name',
+                              type: 'data_name',
                             ),
                             SizedBox(
                               height: 10,
