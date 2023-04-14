@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_code/controller/text_form.dart';
 // import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/select_colors.dart';
 import 'package:qr_code/widgets/home/image.dart';
@@ -18,15 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int type = 1;
   Color backcolor = Colors.white;
   Color forecolor = Colors.black;
-  String text = '';
-  String ssid = '';
-  String password = '';
-  String name = '';
-  String email = '';
-  String description = '';
-  String age = '';
+
   @override
   Widget build(BuildContext context) {
+    HandleForm formProvider = Provider.of<HandleForm>(context);
     return Scaffold(
       backgroundColor: const Color(0XFF0a033a),
       appBar: AppBar(
@@ -47,10 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Center(
               child: QrImage(
                 data: type == 1
-                    ? text
+                    ? formProvider.textForm['text']!
                     : type == 2
-                        ? "SSID: $ssid\nPassword: $password"
-                        : "Name: $name\nAge: $age\nEmail: $email\nDescription: $description",
+                        ? "SSID: ${formProvider.wifiForm['ssid']}\nPassword: ${formProvider.wifiForm['password']}"
+                        : "Name: ${formProvider.dataForm['name']}\nAge: ${formProvider.dataForm['age']}\nEmail: ${formProvider.dataForm['email']}\nDescription: ${formProvider.dataForm['description']}",
                 errorCorrectionLevel: 3,
                 backgroundColor: backcolor,
                 foregroundColor: forecolor,
@@ -282,265 +279,106 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Column(
               children: [
-                type == 1
-                    ? TextFormField(
-                        style: const TextStyle(color: Colors.white),
-                        onChanged: (value) {
-                          setState(() {
-                            text = value;
-                          });
-                        },
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: 'enter your Text',
-                          hintStyle: const TextStyle(
-                            color: Color(0xABFFFFFF),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 20,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.white10,
-                              width: 1,
+                if (type == 1)
+                  const InputField(
+                    hint: 'enter your hint',
+                    type: 'text',
+                  )
+                else
+                  type == 2
+                      ? Column(
+                          children: const [
+                            InputField(
+                              hint: 'SSID',
+                              type: 'wifi_ssid',
                             ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.white10,
-                              width: 2,
+                            SizedBox(
+                              height: 10,
                             ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                            InputField(
+                              hint: 'Password',
+                              type: 'wifi_pass',
+                            )
+                          ],
+                        )
+                      : Column(
+                          children: const [
+                            InputField(
+                              hint: 'name',
+                              type: 'name',
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            InputField(
+                              hint: 'email',
+                              type: 'data_email',
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            InputField(
+                              hint: 'age',
+                              type: 'data_age',
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            InputField(
+                              hint: 'description',
+                              type: 'data_des',
+                            )
+                          ],
                         ),
-                      )
-                    : type == 2
-                        ? Column(
-                            children: [
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (value) {
-                                  setState(() {
-                                    ssid = value;
-                                  });
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  hintText: 'SSID',
-                                  hintStyle: const TextStyle(
-                                    color: Color(0x93E8D8D8),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (value) {
-                                  setState(() {
-                                    password = value;
-                                  });
-                                },
-                                keyboardType: TextInputType.visiblePassword,
-                                decoration: InputDecoration(
-                                  hintText: 'Email',
-                                  hintStyle: const TextStyle(
-                                    color: Color(0x93E8D8D8),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (value) {
-                                  setState(() {
-                                    name = value;
-                                  });
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  hintText: 'Name',
-                                  hintStyle: const TextStyle(
-                                    color: Color(0x93E8D8D8),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (value) {
-                                  setState(() {
-                                    age = value;
-                                  });
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  hintText: 'Age',
-                                  hintStyle: const TextStyle(
-                                    color: Color(0x93E8D8D8),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (value) {
-                                  setState(() {
-                                    email = value;
-                                  });
-                                },
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  hintText: 'Email',
-                                  hintStyle: const TextStyle(
-                                    color: Color(0x93E8D8D8),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (value) {
-                                  setState(() {
-                                    description = value;
-                                  });
-                                },
-                                keyboardType: TextInputType.multiline,
-                                decoration: InputDecoration(
-                                  hintText: 'Description',
-                                  hintStyle: const TextStyle(
-                                    color: Color(0x93E8D8D8),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white10,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
                 const SizedBox(
                   height: 20,
                 ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class InputField extends StatelessWidget {
+  final String type;
+  final String hint;
+
+  const InputField({super.key, required this.type, required this.hint});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      style: const TextStyle(color: Colors.white),
+      onChanged: (value) {
+        Provider.of<HandleForm>(context, listen: false)
+            .changeTextFieldValue(value, type);
+      },
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: const TextStyle(
+          color: Color(0xABFFFFFF),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 20,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.white10,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.white10,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
