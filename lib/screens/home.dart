@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code/controller/text_form.dart';
+import 'package:qr_code/controller/toggle_colors.dart';
 import 'package:qr_code/controller/toggle_type.dart';
 import 'package:qr_code/screens/scan_qr.dart';
 import 'package:qr_code/widgets/forms/data_form.dart';
@@ -22,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int type = 1;
   Color backcolor = Colors.white;
   Color forecolor = Colors.black;
 
@@ -32,6 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
     ToggleType toggleTypeProvider = Provider.of<ToggleType>(context);
     ToggleType toggleTypeProviderFunction =
         Provider.of<ToggleType>(context, listen: false);
+    ToggleColors toggleColorsProvider = Provider.of<ToggleColors>(context);
+    ToggleColors toggleColorsProviderFunction =
+        Provider.of<ToggleColors>(context, listen: false);
     return Scaffold(
       backgroundColor: const Color(0XFF0a033a),
       appBar: AppBar(
@@ -59,8 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? "SSID: ${formProvider.wifiForm['ssid']}\nPassword: ${formProvider.wifiForm['password']}"
                         : "Name: ${formProvider.dataForm['name']}\nAge: ${formProvider.dataForm['age']}\nEmail: ${formProvider.dataForm['email']}\nDescription: ${formProvider.dataForm['description']}",
                 errorCorrectionLevel: 3,
-                backgroundColor: backcolor,
-                foregroundColor: forecolor,
+                backgroundColor: toggleColorsProvider.selectedBgColor,
+                foregroundColor: toggleColorsProvider.selectedFgColor,
                 size: 250,
               ),
             ),
@@ -92,40 +95,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ColorOption(
-                          color: Colors.white,
-                          oneselected: white,
+                          color: Colors.black,
+                          oneselected:
+                              toggleColorsProvider.checkCurruntColor('black'),
                           child: GestureDetector(
                             onTap: () {
-                              setState(() {
-                                forecolor = Colors.black;
-                                white = true;
-                                red = false;
-                                tial = false;
-                                green = false;
-                              });
+                              toggleColorsProviderFunction.changeColor('black');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 10,
                               height: MediaQuery.of(context).size.width / 10,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Colors.black,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
                           ),
                         ),
                         ColorOption(
-                          oneselected: red,
+                          oneselected:
+                              toggleColorsProvider.checkCurruntColor('red'),
                           color: Colors.red,
                           child: GestureDetector(
                             onTap: () {
-                              setState(() {
-                                forecolor = Colors.red;
-                                red = true;
-                                white = false;
-                                tial = false;
-                                green = false;
-                              });
+                              toggleColorsProviderFunction.changeColor('red');
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -139,16 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         ColorOption(
                           color: Colors.teal,
-                          oneselected: tial,
+                          oneselected:
+                              toggleColorsProvider.checkCurruntColor('teal'),
                           child: GestureDetector(
                             onTap: () {
-                              setState(() {
-                                forecolor = Colors.teal;
-                                tial = true;
-                                red = false;
-                                white = false;
-                                green = false;
-                              });
+                              toggleColorsProviderFunction.changeColor('teal');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 10,
@@ -162,16 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         ColorOption(
                           color: Colors.green,
-                          oneselected: green,
+                          oneselected:
+                              toggleColorsProvider.checkCurruntColor('green'),
                           child: GestureDetector(
                             onTap: () {
-                              setState(() {
-                                forecolor = Colors.green;
-                                green = true;
-                                red = false;
-                                tial = false;
-                                white = false;
-                              });
+                              toggleColorsProviderFunction.changeColor('green');
                             },
                             child: Container(
                               decoration: BoxDecoration(
